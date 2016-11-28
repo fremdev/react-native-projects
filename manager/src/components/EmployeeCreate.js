@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Picker, Text, StyleSheet } from 'react-native';
 import { employeeUpdate } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
 
@@ -18,7 +19,7 @@ class EmployeeCreate extends Component {
 
         <CardSection>
           <Input
-            label="phone"
+            label="Phone"
             placeholder="555-555-5555"
             value={this.props.phone}
             onChangeText={value => this.props.employeeUpdate({ prop: 'phone', value })}
@@ -26,6 +27,20 @@ class EmployeeCreate extends Component {
         </CardSection>
 
         <CardSection>
+          <Text style={styles.pickerLabelStyle}>Shift</Text>
+          <Picker
+            style={{ flex: 1 }}
+            selectedValue={this.props.shift}
+            onValueChange={value => this.props.employeeUpdate({ prop: 'shift', value })}
+          >
+            <Picker.Item label="Monday" value="Monday" />
+            <Picker.Item label="Tuesday" value="Tuesday" />
+            <Picker.Item label="Wednesday" value="Wednesday" />
+            <Picker.Item label="Thursday" value="Thursday" />
+            <Picker.Item label="Friday" value="Friday" />
+            <Picker.Item label="Saturday" value="Saturday" />
+            <Picker.Item label="Sunday" value="Sunday" />
+          </Picker>
         </CardSection>
 
         <CardSection>
@@ -35,6 +50,15 @@ class EmployeeCreate extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  pickerLabelStyle: {
+    fontSize: 18,
+    paddingTop: 12,
+    paddingLeft: 20,
+    paddingRight: 60
+  }
+});
 
 const mapStateToProps = (state) => {
   const { name, phone, shift } = state.employeeForm;
